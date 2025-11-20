@@ -1,1 +1,97 @@
 @import "tailwindcss";
+
+@theme {
+    --color-dark-red: #8B0000;
+    --color-light: #FFFFFF;
+    --color-blush: #FFF5F5;
+    --color-crimson: #DC143C;
+    --color-light-pink: #FFB6C1;
+    --color-maroon: #8B0000;
+    --color-bright-red: #FF4444;
+    --color-red: #CC0000;
+    --color-fire-brick: #B22222;
+    --color-pale-pink: #FFE4E4;
+    --color-burgundy: #8B0000;
+    --color-scarlet: #FF0000;
+    --color-dark-scarlet: #CC0000;
+    --color-rose-pink: #FFB6C1;
+    --color-cherry-red: #DC143C;
+    --font-sans: "Proxima Nova", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ==============================
+   Proxima Nova Font Faces
+============================== */
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/ProximaNova-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/ProximaNova-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/ProximaNova-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/ProximaNova-Semibold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/ProximaNova-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/ProximaNova-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/ProximaNova-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+*, body {
+    font-family: "Proxima Nova", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 1rem;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--color-purple);
+    border-radius: 1rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-dark-purple);
+}
+
+* {
+    scrollbar-width: auto; /* "auto" | "thin" | "none" */
+    scrollbar-color: var(--color-purple) #f1f1f1; /* thumb | track */
+}
