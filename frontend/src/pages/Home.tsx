@@ -1,11 +1,11 @@
 import React from 'react'
-import LogoBig from './assets/logo_big.png'
 import { FaTools } from "react-icons/fa";
 import { FaMagnifyingGlass, FaCarSide } from "react-icons/fa6";
 import { MdDevices, MdOutlineDensitySmall } from "react-icons/md";
 import { GiClothes } from "react-icons/gi";
+import NavBar from '../components/NavBar';
 
-const App = () => {
+const Home = () => {
 
   const handleCategoryFilter = async (tags: string[]) => {
       // setIsLoading(true);
@@ -16,6 +16,7 @@ const App = () => {
   return (
     <main className="w-full h-full bg-light">
       {/* NavBar */}
+      <NavBar />
       {/* Hero Section */}
       <section className='flex flex-row items-center justify-between container mx-auto px-20 h-screen'>
         <div>
@@ -54,7 +55,7 @@ const App = () => {
                 />
                 
                 {/* Search Button */}
-                <button className='absolute right-2 px-8 py-3 bg-bright-red hover:bg-red cursor-pointer text-white font-semibold rounded-full transition-colors duration-300 shadow-md hover:shadow-lg'>
+                <button className='absolute right-2 px-8 py-3 bg-red hover:bg-dark-red cursor-pointer text-white font-semibold rounded-full transition-colors duration-300 shadow-md hover:shadow-lg'>
                   Search
                 </button>
               </div>
@@ -62,8 +63,8 @@ const App = () => {
           </div>
         </div>
         <div className='flex flex-col justify-end text-right'>
-          <text className='text-9xl font-bold text-maroon'>SHARE</text>
-          <text className='text-9xl font-bold text-red'>HUB</text>
+          <text className='text-9xl font-bold text-red'>SHARE</text>
+          <text className='text-9xl font-bold text-maroon'>HUB</text>
         </div>
       </section>
       <section className="content">
@@ -73,47 +74,50 @@ const App = () => {
           </div>
           <div className="flex items-center justify-evenly m-2.5 text-center">
             <button
-              className="border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center"
+              className="group border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center"
               onClick={() => handleCategoryFilter(["Appliance"])}
             >
-              <MdDevices fontSize="5rem" className="mt-1 text-dark-red hover:text-white category-icon" />
-              <p className="text-maroon text-base font-extrabold">Appliances</p>
+              <MdDevices fontSize="5rem" className="mt-1 text-dark-red group-hover:text-white category-icon" />
+              <p className="text-maroon group-hover:text-white text-base font-extrabold">Appliances</p>
             </button>
             <button
-              className="border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center"
+              className="group border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center"
               onClick={() => handleCategoryFilter(["Tool"])}
             >
-              <FaTools fontSize="5rem" className="mt-1 text-dark-red hover:text-white category-icon" />
-              <p className="text-maroon text-base font-extrabold">Tools</p>
+              <FaTools fontSize="5rem" className="mt-1 text-dark-red group-hover:text-white category-icon" />
+              <p className="text-maroon group-hover:text-white text-base font-extrabold">Tools</p>
             </button>
             <button
-              className="border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center"
+              className="group border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center"
               onClick={() => handleCategoryFilter(["Service"])}
             >
-              <FaCarSide fontSize="5rem" className="mt-1 text-dark-red hover:text-white category-icon" />
-              <p className="text-maroon text-base font-extrabold">Services</p>
+              <FaCarSide fontSize="5rem" className="mt-1 text-dark-red group-hover:text-white category-icon" />
+              <p className="text-maroon group-hover:text-white text-base font-extrabold">Services</p>
             </button>
             <button
-              className="border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center"
+              className="group border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center"
               onClick={() => handleCategoryFilter(["Clothing"])}
             >
-              <GiClothes fontSize="5rem" className="mt-1 text-dark-red hover:text-white category-icon" />
-              <p className="text-maroon text-base font-extrabold">Clothing</p>
+              <GiClothes fontSize="5rem" className="mt-1 text-dark-red group-hover:text-white category-icon" />
+              <p className="text-maroon group-hover:text-white text-base font-extrabold">Clothing</p>
             </button>
-            <button className="border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center">
-              <MdOutlineDensitySmall fontSize="5rem" className="mt-1 text-dark-red hover:text-white category-icon" />
-              <p className="text-maroon text-base font-extrabold">All Categories</p>
+            <button className="group border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center">
+              <MdOutlineDensitySmall fontSize="5rem" className="mt-1 text-dark-red group-hover:text-white category-icon" />
+              <p className="text-maroon group-hover:text-white text-base font-extrabold">All Categories</p>
             </button>
           </div>
         </div>
 
           {/* FOR YOU */}
-          <div className="for-you">
-              <div className="for-you-header">
-                  <h2>For You</h2>
+          <div className="mt-8">
+              <div className="text-center">
+                  <h2 className='text-maroon text-4xl font-semibold'>For You</h2>
               </div>
-              {/* <div className="listings">
-                  {listed && listed.length > 0 ? (
+              <div className="flex flex-wrap gap-6 border-solid border-dark-red border-3 mx-8">
+                <div className='w-screen h-100 text-center'>
+                  HELLO
+                </div>
+                  {/* {listed && listed.length > 0 ? (
                       listed.map((list: ListedProps) => (
                           <Item
                               key={list._id}
@@ -133,12 +137,12 @@ const App = () => {
                       </div>
                   )
                   }
-                  {!listed && <p className='loading-items'>Loading resources...</p>}
-              </div> */}
+                  {!listed && <p className='loading-items'>Loading resources...</p>} */}
+              </div>
           </div>
       </section>
     </main>
   )
 }
 
-export default App
+export default Home 
