@@ -5,12 +5,17 @@ import './index.css'
 import Home from './pages/Home'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
+import SharePage from './pages/SharePage'
+import LayoutNavBar from './components/LayoutNavBar'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index element={<Home />} />
+        <Route element={<LayoutNavBar />}>
+          <Route index element={<Home />} />
+          <Route path="/share" element={<SharePage />} />
+        </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
       </Routes>

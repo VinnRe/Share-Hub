@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaTools } from "react-icons/fa";
-import { FaMagnifyingGlass, FaCarSide } from "react-icons/fa6";
+import { FaCarSide } from "react-icons/fa6";
 import { MdDevices, MdOutlineDensitySmall } from "react-icons/md";
 import { GiClothes } from "react-icons/gi";
 import NavBar from '../components/NavBar';
@@ -15,8 +15,6 @@ const Home = () => {
   }
   return (
     <main className="w-full h-full bg-light">
-      {/* NavBar */}
-      <NavBar />
       {/* Hero Section */}
       <section className='flex flex-row items-center justify-between container mx-auto px-20 h-screen'>
         <div>

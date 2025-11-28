@@ -1,10 +1,11 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Link, NavLink } from 'react-router'
 
 const navigation = [
-  { name: 'Home', href: '#', current: true },
-  { name: 'Share', href: '#', current: false },
-  { name: 'Moderate', href: '#', current: false },
+  { name: 'Home', to: '/', current: true },
+  { name: 'Share', to: '/share', current: false },
+  { name: 'Moderate', to: '/moderate', current: false },
 ]
 
 function classNames(...classes) {
@@ -36,12 +37,13 @@ export default function NavBar() {
                 className="h-8 w-auto"
               />
             </div>
+            {/* Desktop Nav */}
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {navigation.map((item) => (
-                  <a
+                  <NavLink
                     key={item.name}
-                    href={item.href}
+                    to={item.to}
                     aria-current={item.current ? 'page' : undefined}
                     className={classNames(
                       item.current ? 'bg-burgundy/50 text-light' : 'text-light hover:bg-light/5 hover:text-light',
@@ -49,7 +51,7 @@ export default function NavBar() {
                     )}
                   >
                     {item.name}
-                  </a>
+                  </NavLink>
                 ))}
               </div>
             </div>
@@ -81,28 +83,28 @@ export default function NavBar() {
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-dark-red py-1 outline -outline-offset-1 outline-light/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    to="/profile"
                     className="block px-4 py-2 text-sm text-rose-pink data-focus:bg-light/5 data-focus:outline-hidden"
                   >
                     Your profile
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    to="/settings"
                     className="block px-4 py-2 text-sm text-rose-pink data-focus:bg-light/5 data-focus:outline-hidden"
                   >
                     Settings
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    to="/"
                     className="block px-4 py-2 text-sm text-rose-pink data-focus:bg-light/5 data-focus:outline-hidden"
                   >
                     Sign out
-                  </a>
+                  </Link>
                 </MenuItem>
               </MenuItems>
             </Menu>
@@ -110,21 +112,22 @@ export default function NavBar() {
         </div>
       </div>
 
+      {/* Mobile Nav */}
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pt-2 pb-3">
           {navigation.map((item) => (
-            <DisclosureButton
+            <NavLink
               key={item.name}
-              as="a"
-              href={item.href}
-              aria-current={item.current ? 'page' : undefined}
-              className={classNames(
-                item.current ? 'bg-burgundy/50 text-light' : 'text-rose-pink hover:bg-light/5 hover:text-light',
-                'block rounded-md px-3 py-2 text-base font-medium',
-              )}
+              to={item.to}
+              className={({ isActive }) =>
+                classNames(
+                  isActive ? 'bg-burgundy/50 text-light' : 'text-rose-pink hover:bg-light/5 hover:text-light',
+                  'block rounded-md px-3 py-2 text-base font-medium'
+                )
+              }
             >
               {item.name}
-            </DisclosureButton>
+            </NavLink>
           ))}
         </div>
       </DisclosurePanel>
