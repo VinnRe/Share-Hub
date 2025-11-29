@@ -84,18 +84,10 @@ export default function NavBar() {
               >
                 <MenuItem>
                   <Link
-                    to="/profile"
+                    to="/account-settings"
                     className="block px-4 py-2 text-sm text-rose-pink data-focus:bg-light/5 data-focus:outline-hidden"
                   >
-                    Your profile
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link
-                    to="/settings"
-                    className="block px-4 py-2 text-sm text-rose-pink data-focus:bg-light/5 data-focus:outline-hidden"
-                  >
-                    Settings
+                    Account Settings
                   </Link>
                 </MenuItem>
                 <MenuItem>
