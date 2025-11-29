@@ -82,16 +82,16 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: var(--color-purple);
+    background: var(--color-dark-red);
     border-radius: 1rem;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-dark-purple);
+    background: var(--color-red);
 }
 
 * {
     scrollbar-width: auto; /* "auto" | "thin" | "none" */
-    scrollbar-color: var(--color-purple) #f1f1f1; /* thumb | track */
+    scrollbar-color: var(--color-dark-red) #f1f1f1; /* thumb | track */
 }
