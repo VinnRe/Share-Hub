@@ -1,15 +1,29 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const { handleLogin } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login submitted:', { email, password, rememberMe });
+    try {
+      const isSucccess = await handleLogin(email, password); 
+
+      if (isSucccess) {
+        navigate("/");
+      } else {
+        console.error("FAILED LOGGING IN, PLEASE CHECK YOUR CREDENTIALS");
+      }
+    } catch (error) {
+      console.error("An error occured: ", error)
+    }
   };
 
   return (
@@ -39,7 +53,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border-2 border-pale-pink bg-blush focus:border-crimson focus:outline-none transition-colors"
-                placeholder="BSU Email"
+                placeholder="Email Address"
                 required
               />
             </div>
@@ -73,7 +87,7 @@ export default function LoginPage() {
             </div>
 
             {/* Remember Me & Forgot Password */}
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <label className="flex items-center">
                 <input
                   type="checkbox"
@@ -83,13 +97,13 @@ export default function LoginPage() {
                 />
                 <span className="ml-2 text-sm text-gray-600">Remember me</span>
               </label>
-              {/* <a 
+              <a 
                 href="#" 
                 className="text-sm font-medium text-crimson hover:underline"
               >
                 Forgot password?
-              </a> */}
-            </div>
+              </a>
+            </div> */}
 
             {/* Login Button */}
             <button
