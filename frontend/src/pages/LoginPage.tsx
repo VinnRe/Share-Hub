@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate, Link, useLocation } from 'react-router';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [rememberMe, setRememberMe] = useState(false);
   const { handleLogin } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,7 +18,8 @@ export default function LoginPage() {
       const isSucccess = await handleLogin(email, password); 
 
       if (isSucccess) {
-        navigate("/");
+        const from = location.state?.from?.pathname || '/';
+        navigate(from, { replace: true });
       } else {
         console.error("FAILED LOGGING IN, PLEASE CHECK YOUR CREDENTIALS");
       }

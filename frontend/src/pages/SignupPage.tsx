@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate, Link, useLocation } from 'react-router';
 
 export default function SignupPage() {
   const [firstName, setFirstName] = useState('');
@@ -14,6 +14,7 @@ export default function SignupPage() {
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const { handleSignup, handleLogin } = useAuth();
   const navigate = useNavigate() 
+  const location = useLocation();
   const [passwordError, setPasswordError] = useState('');
 
   const validatePassword = (): boolean => {
@@ -43,7 +44,8 @@ export default function SignupPage() {
       if(isSuccess) {
         const isLogged = await handleLogin(email, password);
         if (isLogged) {
-          navigate("/");
+          const from = location.state?.from?.pathname || '/';
+          navigate(from, { replace: true });
         }
       }
     } catch (error) {

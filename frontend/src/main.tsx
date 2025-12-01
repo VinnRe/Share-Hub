@@ -10,20 +10,24 @@ import LayoutNavBar from './components/LayoutNavBar'
 import ModeratePage from './pages/ModeratePage'
 import AccountSettings from './pages/AccountSettings'
 import { AuthProvider } from './context/AuthContext'
+import { ProtectedRoute } from './components/ProtectedRoute'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route element={<LayoutNavBar />}>
-            <Route index element={<Home />} />
-            <Route path="/share" element={<SharePage />} />
-            <Route path="/moderate" element={<ModeratePage />} />
-            <Route path="/account-settings" element={<AccountSettings />} />
-          </Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+
+          <Route element={<LayoutNavBar />}>
+            <Route index element={<Home />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/share" element={<SharePage />} />
+              <Route path="/moderate" element={<ModeratePage />} />
+              <Route path="/account-settings" element={<AccountSettings />} />
+            </Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
