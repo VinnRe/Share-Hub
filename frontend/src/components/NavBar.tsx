@@ -1,6 +1,9 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, NavLink } from 'react-router'
+import { MdOutlineAccountCircle } from "react-icons/md";
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router';
 
 const navigation = [
   { name: 'Home', to: '/', current: true },
@@ -13,6 +16,17 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
+  const { handleLogout, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogoutClick = async () => {
+    await handleLogout();
+    navigate('/login', { replace: true });
+  };
+
+  const handleClick = () => {
+    console.log("USER: ", user)
+  }
   return (
     <Disclosure
       as="nav"
@@ -57,25 +71,23 @@ export default function NavBar() {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
+            {/* <button
               type="button"
               className="relative rounded-full p-1 text-light hover:text-light focus:outline-2 focus:outline-offset-2 focus:outline-crimson"
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View notifications</span>
               <BellIcon aria-hidden="true" className="size-6" />
-            </button>
+            </button> */}
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
-              <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson cursor-pointer">
-                <span className="absolute -inset-1.5" />
+              <MenuButton className="flex items-center gap-2 rounded-full p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson cursor-pointer hover:bg-light/10">
                 <span className="sr-only">Open user menu</span>
-                <img
-                  alt=""
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  className="size-8 rounded-full bg-dark-red outline -outline-offset-1 outline-light/10"
-                />
+                <h3 className="text-nd font-medium text-light truncate max-w-[100px] text-center">
+                  {user?.name || 'User'}
+                </h3>
+                <MdOutlineAccountCircle className="size-8 rounded-full text-light bg-dark-red/50 outline outline-1 outline-light/20" />
               </MenuButton>
 
               <MenuItems
@@ -85,18 +97,26 @@ export default function NavBar() {
                 <MenuItem>
                   <Link
                     to="/account-settings"
-                    className="block px-4 py-2 text-sm text-rose-pink data-focus:bg-light/5 data-focus:outline-hidden"
+                    className="block px-4 py-2 text-sm text-light data-focus:bg-light/5 data-focus:outline-hidden"
                   >
                     Account Settings
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link
-                    to="/"
-                    className="block px-4 py-2 text-sm text-rose-pink data-focus:bg-light/5 data-focus:outline-hidden"
+                  <button
+                    onClick={handleLogoutClick}
+                    className="block w-full text-left px-4 py-2 text-sm text-light data-focus:bg-light/5 data-focus:outline-hidden"
                   >
-                    Sign out
-                  </Link>
+                    Log Out
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button
+                    onClick={handleClick}
+                    className="block w-full text-left px-4 py-2 text-sm text-light data-focus:bg-light/5 data-focus:outline-hidden"
+                  >
+                    DUMMY TEST
+                  </button>
                 </MenuItem>
               </MenuItems>
             </Menu>
