@@ -1,18 +1,116 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaBookOpen } from "react-icons/fa";
 import { FaCarSide } from "react-icons/fa6";
 import { MdDevices, MdOutlineDensitySmall } from "react-icons/md";
 import { GiClothes } from "react-icons/gi";
 import NavBar from '../components/NavBar';
+import { useAuth } from '../context/AuthContext';
+import { useListedSearch } from '../hooks/useListedSearch';
+import { useFilter } from '../hooks/useFilter';
+import Item from '../components/Item';
+
+interface ListedProps {
+    _id: string;
+    title: string;
+    details: string;
+    media: string;
+    creator: string;
+    createdAt: Date;
+    tags: string[];
+    ownerName: string;
+}
 
 const Home = () => {
+    const [search, setSearch] = useState('')
+    const [listed, setListed] = useState<any>(null)
+    const { searchListed, searchResults, setIsLoadingS } = useListedSearch()
+    const { filterItems, setIsLoading, filteredItems } = useFilter()
+    const { user } = useAuth();
 
-  const handleCategoryFilter = async (tags: string[]) => {
-      // setIsLoading(true);
-      // await filterItems(tags.join(","));
-      // filterResources(filteredItems)
-      // setIsLoading(false);
-  }
+    const filterResources = async (filterValue: any) => {
+        const filtered = filterValue;
+    
+        console.log(filtered);
+        if (filtered) {
+          const listedData = filtered.map((item: any) => {
+            return {
+              ...item.listData,
+              ownerName: item.ownerInfo.name,
+            };
+          });
+          setListed(listedData);
+          return listedData;
+        } else {
+          setListed(null);
+          return null;
+        }
+      };
+
+    const fetchListed = async () => {
+        const response = await fetch("/api/list/fetch/approved")
+        const json = await response.json()
+    
+        console.log(json)
+        if (response.ok) {
+          const listingData = json.map((item: any) => {
+            console.log(item)
+            return {
+                ...item.listData,
+                ownerName: item.ownerInfo.name
+            }
+          })
+          setListed(listingData)
+          console.log(listingData)
+        }
+    }
+
+    const handleSearch = async () => {
+        setIsLoadingS(true)
+        
+        try {
+            if (search === "") {
+                fetchListed();
+            } else {
+                await searchListed(search);
+                // const searched = await searchResults;
+                console.log("SEARCH RESULTS:", searchResults)
+                filterResources(searchResults);
+            }
+        } catch (error) {
+            console.error("Error searching for resources:", error);
+        } finally {
+            setIsLoadingS(false)
+        }
+    }
+
+    const handleCategoryFilter = async (tags: string[]) => {
+        setIsLoading(true);
+        await filterItems(tags.join(","));
+        filterResources(filteredItems)
+        setIsLoading(false);
+    }
+
+    useEffect(() => {
+        fetchListed()
+        return
+    }, [])
+
+    useEffect(() => {
+        if (search !== "") {
+            handleSearch();
+        } else {
+            fetchListed();
+        }
+    }, [search])
+    
+    useEffect(() => {
+        filterResources(searchResults);
+    }, [searchResults])
+
+    useEffect(() => {
+        filterResources(filteredItems);
+    }, [filteredItems])
+
   return (
     <main className="w-full h-full bg-light">
       {/* Hero Section */}
@@ -107,15 +205,12 @@ const Home = () => {
         </div>
 
           {/* FOR YOU */}
-          <div className="mt-8">
+          <div className="mt-8 mb-8">
               <div className="text-center">
                   <h2 className='text-maroon text-4xl font-semibold'>For You</h2>
               </div>
               <div className="flex flex-wrap gap-6 border-solid border-dark-red border-3 mx-8">
-                <div className='w-screen h-100 text-center'>
-                  HELLO
-                </div>
-                  {/* {listed && listed.length > 0 ? (
+                  {listed && listed.length > 0 ? (
                       listed.map((list: ListedProps) => (
                           <Item
                               key={list._id}
@@ -126,16 +221,16 @@ const Home = () => {
                               details={list.details}
                               media={list.media}
                               tags={list.tags}
-                              requesterID={user.data._id}
+                              requesterID={user._id}
                           />
                       ))
                   ) : (
-                      <div className="no-items-container">
-                          <h1 className='no-items'>NO ITEMS ARE BEING SHARED CURRENTLY</h1>
+                      <div className="w-screen h-100 text-center flex items-center justify-center">
+                          <h1 className='text-2xl text-maroon font-bold'>NO ITEMS ARE BEING SHARED CURRENTLY</h1>
                       </div>
                   )
                   }
-                  {!listed && <p className='loading-items'>Loading resources...</p>} */}
+                  {!listed && <p className='text-2xl text-maroon font-bold'>Loading resources...</p>}
               </div>
           </div>
       </section>
