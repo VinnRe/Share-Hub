@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useCreate } from '../hooks/useCreateList';
+import { useFileUpload } from '../hooks/useFileUpload';
+import PopUp from '../components/PopUp';
 
 export default function SharePage() {
   const [itemName, setItemName] = useState('');
@@ -6,15 +9,45 @@ export default function SharePage() {
   const [category, setCategory] = useState('Appliance');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+  const { createList } = useCreate();
+  const { uploadFile } = useFileUpload();
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setSelectedFile(e.target.files[0]);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Listing created:', { itemName, description, category, selectedFile });
+  const [showPopup, setShowPopup] = useState(false)
+  const [eventMessage, setEventMessage] = useState("")
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      if (!selectedFile) {
+          setEventMessage("Please select a file");
+          setShowPopup(true);
+          setTimeout(() => setShowPopup(false), 5000);
+          return;
+      }
+
+      try {
+          // 1. Upload file first and get URL
+          await uploadFile(selectedFile);
+
+          // 2. Create list with correct parameter order
+          await createList(category, itemName, description, selectedFile.name); // media is URL, not File
+
+          setEventMessage(`Successfully shared ${itemName}. Wait for approval.`);
+          setShowPopup(true);
+          setTimeout(() => setShowPopup(false), 5000);
+          
+      } catch (error) {
+          setEventMessage(`Failed to share ${itemName}: ${error}`);
+          setShowPopup(true);
+          setTimeout(() => setShowPopup(false), 5000);
+          console.error("ASDJASD: ", error)
+      }
   };
 
   return (
@@ -102,23 +135,22 @@ export default function SharePage() {
               required
             >
               <option value="Appliance">Appliance</option>
-              <option value="Electronics">Electronics</option>
-              <option value="Furniture">Furniture</option>
-              <option value="Books">Books</option>
-              <option value="Clothing">Clothing</option>
-              <option value="Sports">Sports</option>
-              <option value="Tools">Tools</option>
-              <option value="Other">Other</option>
+              <option value="Appliance">School Supplies</option>
+              <option value="Appliance">Services</option>
+              <option value="Appliance">Clothing</option>
             </select>
           </div>
 
           {/* Create Listing Button */}
           <button
             onClick={handleSubmit}
-            className="w-full py-4 rounded-lg font-bold text-lg text-light bg-crimson hover:bg-fire-brick transition-all hover:shadow-lg"
+            className="w-full cursor-pointer py-4 rounded-lg font-bold text-lg text-light bg-crimson hover:bg-fire-brick transition-all hover:shadow-lg"
           >
             Create Listing
           </button>
+          {showPopup && (
+              <PopUp message={eventMessage} />
+          )}
         </div>
       </div>
     </div>

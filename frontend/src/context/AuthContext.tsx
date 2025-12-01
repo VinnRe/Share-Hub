@@ -3,8 +3,10 @@ import { endpoints } from "../config/config";
 
 // Define types for your context
 type User = {
-  username: string;
-  // Add other user properties as needed
+  name: string;
+  email: string;
+  token: string;
+  role: string;
   [key: string]: string;
 };
 
@@ -61,7 +63,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             console.log("Login Data: ", data);
             if (response.ok) {
                 setToken(data.token);
-                setUser(data.user);
+                const userData = data.data || data
+                console.log("Setting user:", userData);
+                setUser(userData);
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('userID', data.data._id)
                 return true;
@@ -103,7 +107,7 @@ export const getUserData = async (token: string | null): Promise<string | null> 
         return null;
     }
     try {
-        const response = await fetch(endpoints.getUserId, {
+        const response = await fetch(endpoints.getUserData, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
