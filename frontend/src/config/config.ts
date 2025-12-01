@@ -6,6 +6,8 @@ interface Endpoints {
     fetchProfileData: string,
     fileUpload: string,
     createItem: string,
+    approveItem: string,
+    deleteItem: string,
 }
 
 export const endpoints: Endpoints = {
@@ -17,4 +19,6 @@ export const endpoints: Endpoints = {
     fileUpload: `/api/image/upload`,
 
     createItem: `/api/list/create`,
+    approveItem: `/api/list/approve`,
+    deleteItem: `/api/list/delete`,
 }

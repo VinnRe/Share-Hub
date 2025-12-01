@@ -1,4 +1,4 @@
-import React from 'react'
+import ModerateItem from "../components/ModerateItem"
 
 const ModeratePage = () => {
   return (
