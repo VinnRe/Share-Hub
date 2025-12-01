@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate, Link } from 'react-router';
 
 export default function SignupPage() {
   const [firstName, setFirstName] = useState('');
@@ -10,10 +12,43 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const { handleSignup, handleLogin } = useAuth();
+  const navigate = useNavigate() 
+  const [passwordError, setPasswordError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validatePassword = (): boolean => {
+    if (password.length < 8) {
+      setPasswordError('Password must be at least 8 characters');
+      return false;
+    }
+    if (password !== confirmPassword) {
+      setPasswordError('Passwords do not match');
+      return false;
+    }
+    setPasswordError('');
+    return true;
+  };
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Signup submitted:', { firstName, lastName, email, password, confirmPassword, agreeToTerms });
+
+    if (!validatePassword() || !agreeToTerms) {
+      return;
+    }
+
+    try {
+      const isSuccess = await handleSignup(firstName, lastName, email, password)
+
+      if(isSuccess) {
+        const isLogged = await handleLogin(email, password);
+        if (isLogged) {
+          navigate("/");
+        }
+      }
+    } catch (error) {
+      console.log("Error Signing up: ", error)
+    }
   };
 
   return (
@@ -97,7 +132,7 @@ export default function SignupPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border-2 border-pale-pink bg-blush focus:border-crimson focus:outline-none transition-colors"
-                placeholder="BSU Email"
+                placeholder="Email Address"
                 required
               />
             </div>
@@ -158,13 +193,17 @@ export default function SignupPage() {
               </div>
             </div>
 
+            {passwordError && (
+              <p className="mt-1 text-sm text-red-600">{passwordError}</p>
+            )}
+
             {/* Terms & Conditions */}
             <div className="flex items-start">
               <input
                 type="checkbox"
                 checked={agreeToTerms}
                 onChange={(e) => setAgreeToTerms(e.target.checked)}
-                className="w-4 h-4 rounded mt-1 accent-crimson"
+                className="w-4 h-4 rounded mt-1 accent-crimson cursor-pointer"
                 required
               />
               <label className="ml-2 text-sm text-gray-600">
@@ -182,7 +221,7 @@ export default function SignupPage() {
             {/* Signup Button */}
             <button
               type="submit"
-              className="w-full py-3 rounded-lg font-semibold text-light bg-crimson hover:bg-fire-brick transition-all hover:shadow-lg"
+              className="w-full py-3 rounded-lg font-semibold text-light bg-crimson cursor-pointer hover:bg-fire-brick transition-all hover:shadow-lg"
             >
               Create Account
             </button>
@@ -191,12 +230,12 @@ export default function SignupPage() {
           {/* Login Link */}
           <p className="mt-8 text-center text-sm text-gray-600">
             Already have an account?{' '}
-            <a 
-              href="/login" 
-              className="font-medium text-crimson hover:underline"
+            <Link 
+              to="/login" 
+              className="font-medium text-crimson hover:underline cursor-pointer"
             >
               Log in
-            </a>
+            </Link>
           </p>
         </div>
       </div>

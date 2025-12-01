@@ -11,6 +11,7 @@ type User = {
 type AuthContextType = {
   user: User | null;
   token: string | null;
+  handleSignup: (firstName: string, lastName: string, email: string, password: string) => Promise<boolean>;
   handleLogin: (username: string, password: string) => Promise<boolean>;
   handleLogout: () => Promise<void>;
 };
@@ -25,6 +26,28 @@ type AuthProviderProps = {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [token, setToken] = useState<string | null>(localStorage.getItem('token') || null);
+
+    const handleSignup = async (firstName: string, lastName: string, email: string, password: string): Promise<boolean> => {
+        try {
+            const name = `${firstName} ${lastName}`
+
+            console.log("Request payload:", JSON.stringify({name, email, password}))
+            const response = await fetch(endpoints.signup, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({name, email, password})
+            })
+
+            if (response.ok) {
+                return true
+        } else {
+            throw new Error('Login failed');
+        }
+        } catch (error) {
+            console.error("Error signing in: ", error)
+            return false;
+        }
+    }
 
     const handleLogin = async (email: string, password: string): Promise<boolean> => {
         try {
@@ -68,7 +91,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, token, handleLogin, handleLogout }}>
+        <AuthContext.Provider value={{ user, token, handleSignup, handleLogin, handleLogout }}>
             {children}
         </AuthContext.Provider>
     );

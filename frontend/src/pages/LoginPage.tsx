@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -113,6 +113,16 @@ export default function LoginPage() {
               Log In
             </button>
           </form>
+          {/* Signup Link */}
+          <p className="mt-8 text-center text-sm text-gray-600">
+            Don't have an account?{' '}
+            <Link 
+              to="/signup" 
+              className="font-medium text-crimson hover:underline cursor-pointer"
+            >
+              Create account
+            </Link>
+          </p>
         </div>
       </div>
 
