@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PopUp from './PopUp';
 import { endpoints } from '../config/config';
+import { useAuth } from '../context/AuthContext';
 
 interface ItemProps {
     itemID: string;
@@ -16,18 +17,10 @@ const ModerateItem: React.FC<ItemProps> = ({ itemID, title, details, media, crea
   const createdAtString = createdAt ? createdAt.toLocaleDateString() : '';
   const [showPopup, setShowPopup] = useState(false)
   const [eventMessage, setEventMessage] = useState("")
+  const { token, user } = useAuth();
 
   const handleApprove = async () => {
       try {
-          const storedUserDataString = localStorage.getItem("user");
-          if (!storedUserDataString) {
-              console.error("No user data found in localStorage");
-              return;
-          }
-              
-          const storedUserData = JSON.parse(storedUserDataString);
-          const token = storedUserData.token;
-
           const response = await fetch(endpoints.approveItem, {
               method: "POST",
               headers: {
@@ -64,15 +57,6 @@ const ModerateItem: React.FC<ItemProps> = ({ itemID, title, details, media, crea
 
   const handleReject = async () => {
       try {
-          const storedUserDataString = localStorage.getItem("user");
-          if (!storedUserDataString) {
-              console.error("No user data found in localStorage");
-              return;
-          }
-          
-          const storedUserData = JSON.parse(storedUserDataString);
-          const token = storedUserData.token;
-  
           const response = await fetch(endpoints.deleteItem, {
               method: "POST",
               headers: {

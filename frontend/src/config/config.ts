@@ -8,6 +8,7 @@ interface Endpoints {
     createItem: string,
     approveItem: string,
     deleteItem: string,
+    fetchUnapproved: string,
 }
 
 export const endpoints: Endpoints = {
@@ -21,4 +22,5 @@ export const endpoints: Endpoints = {
     createItem: `/api/list/create`,
     approveItem: `/api/list/approve`,
     deleteItem: `/api/list/delete`,
+    fetchUnapproved: `/api/list/fetch/unapproved`,
 }
