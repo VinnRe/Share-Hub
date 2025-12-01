@@ -5,7 +5,7 @@ import { MdOutlineAccountCircle } from "react-icons/md";
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 
-const navigation = [
+const baseNavigation = [
   { name: 'Home', to: '/', current: true },
   { name: 'Share', to: '/share', current: false },
   { name: 'Moderate', to: '/moderate', current: false },
@@ -18,6 +18,11 @@ function classNames(...classes) {
 export default function NavBar() {
   const { handleLogout, user } = useAuth();
   const navigate = useNavigate();
+
+  // Filter navigation based on user role
+  const navigation = user?.role === 'user' 
+    ? baseNavigation.filter(item => item.name !== 'Moderate') 
+    : baseNavigation;
 
   const handleLogoutClick = async () => {
     await handleLogout();
@@ -72,14 +77,6 @@ export default function NavBar() {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            {/* <button
-              type="button"
-              className="relative rounded-full p-1 text-light hover:text-light focus:outline-2 focus:outline-offset-2 focus:outline-crimson"
-            >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">View notifications</span>
-              <BellIcon aria-hidden="true" className="size-6" />
-            </button> */}
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
