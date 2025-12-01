@@ -33,7 +33,7 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    console.log("PRESSED")
     if (!validatePassword() || !agreeToTerms) {
       return;
     }

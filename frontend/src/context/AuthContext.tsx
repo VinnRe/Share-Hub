@@ -55,6 +55,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setLoading(false);
   }, []);
 
+  const handleSignup = async (firstName: string, lastName: string, email: string, password: string): Promise<boolean> => {
+      try {
+          const name = `${firstName} ${lastName}`
+
+
+          console.log("Request payload:", JSON.stringify({name, email, password}))
+          const response = await fetch(endpoints.signup, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json'},
+              body: JSON.stringify({name, email, password})
+          })
+
+
+          if (response.ok) {
+              return true
+      } else {
+          throw new Error('Login failed');
+      }
+      } catch (error) {
+          console.error("Error signing in: ", error)
+          return false;
+      }
+  }
+
   const handleLogin = async (email: string, password: string): Promise<boolean> => {
     try {
       const response = await fetch(endpoints.login, {
@@ -118,7 +142,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     token,
     loading,
-    handleSignup: async () => false, // Implement as needed
+    handleSignup,
     handleLogin,
     handleLogout
   };
