@@ -24,9 +24,10 @@ export default function NavBar() {
     navigate('/login', { replace: true });
   };
 
-  const handleClick = () => {
-    console.log("USER: ", user)
+  const handleLoginSwitch = () => {
+    navigate('/login', { replace: true });
   }
+
   return (
     <Disclosure
       as="nav"
@@ -82,43 +83,49 @@ export default function NavBar() {
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
-              <MenuButton className="flex items-center gap-2 rounded-full p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson cursor-pointer hover:bg-light/10">
-                <span className="sr-only">Open user menu</span>
-                <h3 className="text-nd font-medium text-light truncate max-w-[100px] text-center">
-                  {user?.name || 'User'}
-                </h3>
-                <MdOutlineAccountCircle className="size-8 rounded-full text-light bg-dark-red/50 outline outline-1 outline-light/20" />
-              </MenuButton>
+              {user ? (
+                <>
+                  <MenuButton className="flex items-center gap-2 rounded-full p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson cursor-pointer hover:bg-light/10">
+                    <span className="sr-only">Open user menu</span>
+                    <h3 className="text-nd font-medium text-light truncate max-w-[100px] text-center">
+                      {user?.name || 'User'}
+                    </h3>
+                    <MdOutlineAccountCircle className="size-8 rounded-full text-light bg-dark-red/50 outline outline-1 outline-light/20" />
+                  </MenuButton>
 
-              <MenuItems
-                transition
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-dark-red py-1 outline -outline-offset-1 outline-light/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-              >
-                <MenuItem>
-                  <Link
-                    to="/account-settings"
-                    className="block px-4 py-2 text-sm text-light data-focus:bg-light/5 data-focus:outline-hidden"
+                  <MenuItems
+                    transition
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-dark-red py-1 outline -outline-offset-1 outline-light/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                   >
-                    Account Settings
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  <button
-                    onClick={handleLogoutClick}
-                    className="block w-full text-left px-4 py-2 text-sm text-light data-focus:bg-light/5 data-focus:outline-hidden"
-                  >
-                    Log Out
-                  </button>
-                </MenuItem>
-                <MenuItem>
-                  <button
-                    onClick={handleClick}
-                    className="block w-full text-left px-4 py-2 text-sm text-light data-focus:bg-light/5 data-focus:outline-hidden"
-                  >
-                    DUMMY TEST
-                  </button>
-                </MenuItem>
-              </MenuItems>
+                    <MenuItem>
+                      <Link
+                        to="/account-settings"
+                        className="block px-4 py-2 text-sm text-light data-focus:bg-light/5 data-focus:outline-hidden"
+                      >
+                        Account Settings
+                      </Link>
+                    </MenuItem>
+                    <MenuItem>
+                      <button
+                        onClick={handleLogoutClick}
+                        className="block w-full text-left px-4 py-2 text-sm text-light data-focus:bg-light/5 data-focus:outline-hidden"
+                      >
+                        Log Out
+                      </button>
+                    </MenuItem>
+                  </MenuItems>
+                </>
+              ) : (
+                <>
+                  <MenuButton onClick={handleLoginSwitch} className="flex items-center gap-2 rounded-full p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson cursor-pointer hover:bg-light/10">
+                    <span className="sr-only">Open user menu</span>
+                    <h3 className="text-nd font-medium text-light truncate max-w-[100px] text-center">
+                      Login
+                    </h3>
+                    <MdOutlineAccountCircle className="size-8 rounded-full text-light bg-dark-red/50 outline outline-1 outline-light/20" />
+                  </MenuButton>
+                </>
+              ) }
             </Menu>
           </div>
         </div>
