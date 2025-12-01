@@ -32,11 +32,9 @@ export default function SharePage() {
       }
 
       try {
-          // 1. Upload file first and get URL
           await uploadFile(selectedFile);
 
-          // 2. Create list with correct parameter order
-          await createList(category, itemName, description, selectedFile.name); // media is URL, not File
+          await createList(category, itemName, description, selectedFile.name);
 
           setEventMessage(`Successfully shared ${itemName}. Wait for approval.`);
           setShowPopup(true);
@@ -46,12 +44,15 @@ export default function SharePage() {
           setEventMessage(`Failed to share ${itemName}: ${error}`);
           setShowPopup(true);
           setTimeout(() => setShowPopup(false), 5000);
-          console.error("ASDJASD: ", error)
+          console.error("Failed to share: ", error)
       }
   };
 
   return (
     <div className="min-h-screen bg-blush flex items-center justify-center p-6">
+      {showPopup && (
+          <PopUp message={eventMessage} />
+      )}
       <div className="w-full max-w-3xl bg-light rounded-2xl shadow-xl border-2 border-pale-pink p-8">
         <h1 className="text-4xl font-bold text-center mb-8 text-maroon">
           Share Something!
@@ -148,9 +149,6 @@ export default function SharePage() {
           >
             Create Listing
           </button>
-          {showPopup && (
-              <PopUp message={eventMessage} />
-          )}
         </div>
       </div>
     </div>

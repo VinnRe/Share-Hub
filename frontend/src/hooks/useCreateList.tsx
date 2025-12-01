@@ -5,7 +5,8 @@ import { endpoints } from "../config/config"
 export const useCreate = () => {
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const { token, user } = useAuth();
+    const { token } = useAuth();
+    const userID = localStorage.getItem("userID")
     
     const createList = async (tags: string, title: string, details: string, media: string) => {
         setIsLoading(true);
@@ -17,7 +18,9 @@ export const useCreate = () => {
                 details,
                 tags,
                 media,
-                creator: user
+                user: { 
+                    _id: userID
+                },
             };
 
             console.log("Request payload:", JSON.stringify(payload));
@@ -37,12 +40,6 @@ export const useCreate = () => {
             if (!response.ok) {
                 setError(json.error || 'Failed to create list');
                 return;
-            }
-
-            // Success - optionally refresh user data
-            if (user) {
-                // Update counts if backend returns updated user
-                console.log("JSADNA")
             }
             
         } catch (err) {
