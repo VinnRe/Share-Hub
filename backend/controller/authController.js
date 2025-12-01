@@ -162,14 +162,11 @@ exports.fetchData = catchAsync(async(req,res,next) => {
     try {
         const user = await User.findById(req.user._id);
     
-        const { name, email, displayName } = user;
-    
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
 
-        res.status(200).json({
-          name,
-          email,
-          displayName,
-        });
+        res.status(200).json(user);
       } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
