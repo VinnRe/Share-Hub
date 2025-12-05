@@ -8,7 +8,6 @@ type User = {
   email: string;
   displayName?: string;
   role?: string;
-  // Add other actual fields from your backend
   [key: string]: any;
 };
 

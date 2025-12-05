@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { IoIosLogOut } from "react-icons/io";
 import { MdAccountCircle } from "react-icons/md";
-// import { useLogout } from "../hooks/useLogout";
-// import { useAccountUpdate } from "../hooks/useAccountUpdate";
 // import ReceiptForm from "../components/ReceiptForm";
 import PopUp from "../components/PopUp";
+import { useAccountUpdate } from "../hooks/useAccountUpdate";
+import { useAuth } from "../context/AuthContext";
 
 const AccountSettings: React.FC = () => {
   const [userName, setUserName] = useState("");
@@ -17,44 +16,14 @@ const AccountSettings: React.FC = () => {
   const [passwordEditable, setPasswordEditable] = useState(false);
   const [emailChange, setEmailChange] = useState("CHANGE");
   const [passwordChange, setPasswordChange] = useState("CHANGE");
-//   const { updateAccount } = useAccountUpdate();
+  const { updateAccount } = useAccountUpdate();
   const [showForm, setShowForm] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [eventMessage, setEventMessage] = useState("");
-
-//   const { logout } = useLogout();
-
-//   useEffect(() => {
-//     const fetchUser = async () => {
-//       try {
-//         const storedUserDataString = localStorage.getItem("user");
-//         if (!storedUserDataString) return;
-
-//         const storedUserData = JSON.parse(storedUserDataString);
-//         const token = storedUserData.token;
-
-//         if (!token) return;
-
-//         const response = await fetch("/api/user/fetch", {
-//           headers: { Authorization: `Bearer ${token}` },
-//         });
-
-//         if (response.ok) {
-//           const userData = await response.json();
-//           setDisplayUserName(userData.name);
-//           setDisplayEmail(userData.email);
-//         }
-//       } catch (error) {
-//         console.error("Error fetching user data:", error);
-//       }
-//     };
-    
-//     fetchUser();
-//   }, []);
+  const { user } = useAuth();
 
   const toggleForm = () => setShowForm((prev) => !prev);
 
-//   const handleLogout = () => logout();
 
   const handleSubmit = async () => {
     if (password !== confirmPassword) {
@@ -67,7 +36,7 @@ const AccountSettings: React.FC = () => {
       const dataToUpdate: { name?: string; email?: string } = {};
       if (userName && userName !== displayUserName) dataToUpdate.name = userName;
       if (email && email !== displayEmail) dataToUpdate.email = email;
-      // await updateAccount(dataToUpdate);
+      await updateAccount(dataToUpdate);
 
       if (dataToUpdate.name) setDisplayUserName(dataToUpdate.name);
       if (dataToUpdate.email) setDisplayEmail(dataToUpdate.email);
@@ -104,13 +73,6 @@ const AccountSettings: React.FC = () => {
         {/* Top Header */}
         <div className="flex justify-between items-center mb-12">
           <h1 className="font-extrabold text-4xl md:text-5xl text-maroon">Account Settings</h1>
-          <button
-          //   onClick={handleLogout}
-            className="cursor-pointer flex items-center justify-center gap-2 px-6 py-3 font-extrabold text-base md:text-lg text-crimson border-2 border-crimson rounded-xl bg-light hover:bg-crimson hover:text-light transition-colors"
-            type="button"
-          >
-            Logout <IoIosLogOut className="text-xl" />
-          </button>
         </div>
 
         {/* Main Container */}
@@ -126,7 +88,7 @@ const AccountSettings: React.FC = () => {
                 </p>
                 <input
                   type="text"
-                  placeholder="Username"
+                  placeholder="Name"
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
                   className="w-full h-12 rounded-lg bg-blush shadow-md border-none px-4 text-base focus:outline-none focus:ring-2 focus:ring-crimson"
@@ -145,7 +107,7 @@ const AccountSettings: React.FC = () => {
                   <div className="space-y-2">
                     <input
                       type="text"
-                      placeholder="Email"
+                      placeholder="Email Address"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       readOnly={!emailEditable}
@@ -213,8 +175,8 @@ const AccountSettings: React.FC = () => {
               
               <div className="flex flex-col items-center py-6">
                 <MdAccountCircle className="text-crimson text-[12rem] mb-4" />
-                <h3 className="text-xl font-semibold text-maroon">{displayUserName || "Guest User"}</h3>
-                <p className="text-base text-maroon/70">{displayEmail || "user@example.com"}</p>
+                <h3 className="text-xl font-semibold text-maroon">{user?.name || "Guest User"}</h3>
+                <p className="text-base text-maroon/70">{user?.email || "user@example.com"}</p>
               </div>
               <div className="flex justify-end mt-8">
                 <button
@@ -226,9 +188,6 @@ const AccountSettings: React.FC = () => {
               </div>  
             </div>
           </div>
-
-          {/* Save Button */}
-          
         </div>
       </div>
 
