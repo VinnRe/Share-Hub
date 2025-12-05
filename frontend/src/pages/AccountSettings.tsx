@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { MdAccountCircle } from "react-icons/md";
-// import ReceiptForm from "../components/ReceiptForm";
+import ReceiptForm from "../components/ReceiptForm";
 import PopUp from "../components/PopUp";
 import { useAccountUpdate } from "../hooks/useAccountUpdate";
 import { useAuth } from "../context/AuthContext";
@@ -23,7 +23,6 @@ const AccountSettings: React.FC = () => {
   const { user } = useAuth();
 
   const toggleForm = () => setShowForm((prev) => !prev);
-
 
   const handleSubmit = async () => {
     if (password !== confirmPassword) {
@@ -165,13 +164,13 @@ const AccountSettings: React.FC = () => {
             {/* Right Panel - Profile Section */}
             <div className="flex flex-col items-center justify-start space-y-6 lg:border-l lg:border-pale-pink lg:pl-8">
               <button
-                // onClick={toggleForm}
+                onClick={toggleForm}
                 className="cursor-pointer w-full max-w-xs h-12 bg-crimson text-light rounded-full shadow-md font-semibold text-base hover:bg-dark-red transition-colors"
                 type="button"
               >
                 Receipts
               </button>
-              {/* {showForm && <ReceiptForm onClose={toggleForm} />} */}
+              {showForm && <ReceiptForm onClose={toggleForm} />}
               
               <div className="flex flex-col items-center py-6">
                 <MdAccountCircle className="text-crimson text-[12rem] mb-4" />

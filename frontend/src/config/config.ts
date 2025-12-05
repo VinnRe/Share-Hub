@@ -13,6 +13,10 @@ interface Endpoints {
     listSearchFetch: string,
     listTagsFetch: string,
     listRequest: string,
+    listAccept: string,
+    listReject: string,
+    fetchRequests: string,
+    fetchReceipts: string,
 }
 
 export const endpoints: Endpoints = {
@@ -32,4 +36,9 @@ export const endpoints: Endpoints = {
     listSearchFetch: `/api/list/fetch/search`,
     listTagsFetch: `/api/list/fetch/tags`,
     listRequest: `/api/list/request`,
+    listAccept: `/api/list/accept`,
+    listReject: `/api/list/reject`,
+
+    fetchRequests: `/api/list/fetch/request`,
+    fetchReceipts: `/api/list/fetch/receipt`,
 }
