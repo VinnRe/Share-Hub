@@ -8,6 +8,7 @@ import { useAuth } from '../context/AuthContext';
 import { useListedSearch } from '../hooks/useListedSearch';
 import { useFilter } from '../hooks/useFilter';
 import Item from '../components/Item';
+import { endpoints } from '../config/config';
 
 interface ListedProps {
     _id: string;
@@ -23,6 +24,7 @@ interface ListedProps {
 const Home = () => {
     const [search, setSearch] = useState('')
     const [listed, setListed] = useState<any>(null)
+    const [shouldRefresh, setShouldRefresh] = useState(false);
     const { searchListed, searchResults, setIsLoadingS } = useListedSearch()
     const { filterItems, setIsLoading, filteredItems } = useFilter()
     const { user } = useAuth();
@@ -47,7 +49,7 @@ const Home = () => {
       };
 
     const fetchListed = async () => {
-        const response = await fetch("/api/list/fetch/approved")
+        const response = await fetch(endpoints.fetchApproved)
         const json = await response.json()
     
         console.log(json)
@@ -94,6 +96,13 @@ const Home = () => {
         fetchListed()
         return
     }, [])
+
+    useEffect(() => {
+      if(shouldRefresh) {
+        fetchListed();
+        setShouldRefresh(false);
+      }
+    }, [shouldRefresh])
 
     useEffect(() => {
         if (search !== "") {
@@ -197,7 +206,9 @@ const Home = () => {
               <GiClothes fontSize="5rem" className="mt-1 text-dark-red group-hover:text-white category-icon" />
               <p className="text-maroon group-hover:text-white text-base font-extrabold">Clothing</p>
             </button>
-            <button className="group border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center">
+            <button className="group border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center"
+              onClick={fetchListed}
+            >
               <MdOutlineDensitySmall fontSize="5rem" className="mt-1 text-dark-red group-hover:text-white category-icon" />
               <p className="text-maroon group-hover:text-white text-base font-extrabold">All Categories</p>
             </button>
@@ -209,7 +220,7 @@ const Home = () => {
               <div className="text-center">
                   <h2 className='text-maroon text-4xl font-semibold'>For You</h2>
               </div>
-              <div className="flex flex-wrap gap-6 border-solid border-dark-red border-3 mx-8">
+              <div className="flex flex-wrap gap-6 border-solid border-dark-red border-3 mx-8 p-5">
                   {listed && listed.length > 0 ? (
                       listed.map((list: ListedProps) => (
                           <Item
@@ -221,7 +232,8 @@ const Home = () => {
                               details={list.details}
                               media={list.media}
                               tags={list.tags}
-                              requesterID={user._id}
+                              requesterID={user?._id}
+                              onRefresh={() => setShouldRefresh(true)}
                           />
                       ))
                   ) : (

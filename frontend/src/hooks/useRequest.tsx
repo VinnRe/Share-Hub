@@ -34,10 +34,11 @@ export const useRequest = () => {
         if (!response.ok) {
             setIsLoading(false)
             setError(json.error)
+            return false
         }
         if (response.ok) {
-
             setIsLoading(false)
+            return true
         }
     }
     return { requestItem, isLoading, error}
