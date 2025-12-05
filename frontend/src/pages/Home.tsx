@@ -157,10 +157,15 @@ const Home = () => {
                   type='text'
                   placeholder='Search for items to borrow or share...'
                   className='w-full py-4 pl-16 pr-32 text-lg text-dark placeholder-gray-400 bg-transparent rounded-full focus:outline-none'
+                  onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 />
                 
                 {/* Search Button */}
-                <button className='absolute right-2 px-8 py-3 bg-red hover:bg-dark-red cursor-pointer text-white font-semibold rounded-full transition-colors duration-300 shadow-md hover:shadow-lg'>
+                <button 
+                  onClick={handleSearch}
+                  className='absolute right-2 px-8 py-3 bg-red hover:bg-dark-red cursor-pointer text-white font-semibold rounded-full transition-colors duration-300 shadow-md hover:shadow-lg'
+                >
                   Search
                 </button>
               </div>
