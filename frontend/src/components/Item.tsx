@@ -139,7 +139,7 @@ const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, cre
                     {/* Admin Remove Button */}
                     {user && user.role === "admin" && (
                         <button 
-                            className="w-full py-3 px-6 rounded-xl bg-scarlet text-light font-bold text-base hover:bg-dark-scarlet transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 transform"
+                            className="cursor-pointer w-full py-3 px-6 rounded-xl bg-scarlet text-light font-bold text-base hover:bg-dark-scarlet transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 transform"
                             onClick={handleDelete}
                         >
                             Remove

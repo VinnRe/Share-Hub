@@ -2,6 +2,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, NavLink } from 'react-router'
 import { MdOutlineAccountCircle } from "react-icons/md";
+import { TiWorld } from "react-icons/ti";
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 
@@ -51,11 +52,7 @@ export default function NavBar() {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
-              <img
-                alt="ShareHub"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
-              />
+              <TiWorld className='h-8 w-auto text-light'/>
             </div>
             {/* Desktop Nav */}
             <div className="hidden sm:ml-6 sm:block">
