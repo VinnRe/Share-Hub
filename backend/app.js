@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const multer = require("multer")
 var morgan = require("morgan");
 const AppError = require("./utils/appError");
+const cors = require("cors");
 
 const app = express();
 
@@ -14,6 +15,11 @@ app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(cors({
+  origin: "https://share-hub-psi.vercel.app",
+  credentials: true,
+}));
 
 module.exports = app;
 
