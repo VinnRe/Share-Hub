@@ -1,44 +1,46 @@
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 interface Endpoints {
-    login: string,
-    signup: string,
-    logout: string,
-    updateProfile: string,
-    fetchProfileData: string,
-    fileUpload: string,
-    createItem: string,
-    approveItem: string,
-    deleteItem: string,
-    fetchUnapproved: string,
-    fetchApproved: string,
-    listSearchFetch: string,
-    listTagsFetch: string,
-    listRequest: string,
-    listAccept: string,
-    listReject: string,
-    fetchRequests: string,
-    fetchReceipts: string,
+    login: string;
+    signup: string;
+    logout: string;
+    updateProfile: string;
+    fetchProfileData: string;
+    fileUpload: string;
+    createItem: string;
+    approveItem: string;
+    deleteItem: string;
+    fetchUnapproved: string;
+    fetchApproved: string;
+    listSearchFetch: string;
+    listTagsFetch: string;
+    listRequest: string;
+    listAccept: string;
+    listReject: string;
+    fetchRequests: string;
+    fetchReceipts: string;
 }
 
 export const endpoints: Endpoints = {
-    login: `/api/user/login`,
-    signup: `/api/user/signup`,
-    logout: `/api/user/logout`,
-    updateProfile: `/api/user/update/profile`,
-    fetchProfileData: `/api/user/fetch`,
-    fileUpload: `/api/image/upload`,
+    login: `${API_URL}/api/user/login`,
+    signup: `${API_URL}/api/user/signup`,
+    logout: `${API_URL}/api/user/logout`,
+    updateProfile: `${API_URL}/api/user/update/profile`,
+    fetchProfileData: `${API_URL}/api/user/fetch`,
+    fileUpload: `${API_URL}/api/image/upload`,
 
-    createItem: `/api/list/create`,
-    approveItem: `/api/list/approve`,
-    deleteItem: `/api/list/delete`,
-    fetchUnapproved: `/api/list/fetch/unapproved`,
-    fetchApproved: `/api/list/fetch/approved`,
+    createItem: `${API_URL}/api/list/create`,
+    approveItem: `${API_URL}/api/list/approve`,
+    deleteItem: `${API_URL}/api/list/delete`,
+    fetchUnapproved: `${API_URL}/api/list/fetch/unapproved`,
+    fetchApproved: `${API_URL}/api/list/fetch/approved`,
 
-    listSearchFetch: `/api/list/fetch/search`,
-    listTagsFetch: `/api/list/fetch/tags`,
-    listRequest: `/api/list/request`,
-    listAccept: `/api/list/accept`,
-    listReject: `/api/list/reject`,
+    listSearchFetch: `${API_URL}/api/list/fetch/search`,
+    listTagsFetch: `${API_URL}/api/list/fetch/tags`,
+    listRequest: `${API_URL}/api/list/request`,
+    listAccept: `${API_URL}/api/list/accept`,
+    listReject: `${API_URL}/api/list/reject`,
 
-    fetchRequests: `/api/list/fetch/request`,
-    fetchReceipts: `/api/list/fetch/receipt`,
-}
+    fetchRequests: `${API_URL}/api/list/fetch/request`,
+    fetchReceipts: `${API_URL}/api/list/fetch/receipt`,
+};
