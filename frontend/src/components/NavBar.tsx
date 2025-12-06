@@ -22,7 +22,7 @@ export default function NavBar() {
 
   const navigation = user?.role === 'admin'
   ? baseNavigation
-  : baseNavigation.filter(item => item.name !== 'Moderate');
+  : baseNavigation.filter(item => item.name == 'Moderate');
 
   const handleLogoutClick = async () => {
     await handleLogout();
