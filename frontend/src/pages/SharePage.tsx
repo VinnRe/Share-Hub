@@ -136,9 +136,9 @@ export default function SharePage() {
               required
             >
               <option value="Appliance">Appliance</option>
-              <option value="Appliance">School Supplies</option>
-              <option value="Appliance">Services</option>
-              <option value="Appliance">Clothing</option>
+              <option value="School Supplies">School Supplies</option>
+              <option value="Services">Services</option>
+              <option value="Clothing">Clothing</option>
             </select>
           </div>
 
