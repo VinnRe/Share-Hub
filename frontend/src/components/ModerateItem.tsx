@@ -11,9 +11,10 @@ interface ItemProps {
     creator: string;
     createdAt: Date;
     tags: string[];
+    onRefresh?: () => void;
 }
 
-const ModerateItem: React.FC<ItemProps> = ({ itemID, title, details, media, creator, createdAt, tags }) => {
+const ModerateItem: React.FC<ItemProps> = ({ itemID, title, details, media, creator, createdAt, tags, onRefresh }) => {
   const createdAtString = createdAt ? createdAt.toLocaleDateString() : '';
   const [showPopup, setShowPopup] = useState(false)
   const [eventMessage, setEventMessage] = useState("")
@@ -33,6 +34,7 @@ const ModerateItem: React.FC<ItemProps> = ({ itemID, title, details, media, crea
           if (response.ok) {
               setShowPopup(true)
               setEventMessage(`Successfully approved item ${title}`)
+              onRefresh?.();
               setTimeout(() => {
                   setShowPopup(false)
               }, 5000)
@@ -69,6 +71,7 @@ const ModerateItem: React.FC<ItemProps> = ({ itemID, title, details, media, crea
           if (response.ok) {
               setEventMessage(`Successfully rejected ${title}`)
               setShowPopup(true)
+              onRefresh?.();
               setTimeout(() => {
                   setShowPopup(false)
               }, 5000)

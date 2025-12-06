@@ -19,6 +19,7 @@ const ModeratePage = () => {
   const [listed, setListed] = useState<any>(null)
   const { user } = useAuth()
   const navigate = useNavigate()
+  const [shouldRefresh, setShouldRefresh] = useState(false)
 
   const fetchListed = async () => {
         const response = await fetch(endpoints.fetchUnapproved)
@@ -51,6 +52,13 @@ const ModeratePage = () => {
         }
     }, [user, navigate])
 
+    useEffect(() => {
+      if(shouldRefresh) {
+        fetchListed()
+        setShouldRefresh(false)
+      }
+    }, [shouldRefresh])
+
   return (
     <main className="bg-light flex flex-col items-center justify-center">
       <section className="w-full max-w-6xl">
@@ -67,6 +75,7 @@ const ModeratePage = () => {
                     details={list.details}
                     media={list.media}
                     tags={list.tags}
+                    onRefresh={() => setShouldRefresh(true)}
                   />
                 ))
               ) : (
