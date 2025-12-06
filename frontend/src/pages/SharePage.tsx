@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useCreate } from '../hooks/useCreateList';
 import { useFileUpload } from '../hooks/useFileUpload';
 import PopUp from '../components/PopUp';
+import { useNavigate, useLocation } from 'react-router';
 
 export default function SharePage() {
   const [itemName, setItemName] = useState('');
@@ -11,6 +12,9 @@ export default function SharePage() {
 
   const { createList } = useCreate();
   const { uploadFile } = useFileUpload();
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -34,12 +38,18 @@ export default function SharePage() {
       try {
           await uploadFile(selectedFile);
 
-          await createList(category, itemName, description, selectedFile.name);
+          const isSuccess = await createList(category, itemName, description, selectedFile.name);
 
-          setEventMessage(`Successfully shared ${itemName}. Wait for approval.`);
-          setShowPopup(true);
-          setTimeout(() => setShowPopup(false), 5000);
-          
+          if (isSuccess) {    
+            setEventMessage(`Successfully shared ${itemName}. Wait for approval.`);
+            setShowPopup(true);
+            setTimeout(() => {
+                setShowPopup(false)
+                const from = location.state?.from?.pathname || '/';
+                navigate(from, { replace: true });
+            }, 3000);
+          }
+
       } catch (error) {
           setEventMessage(`Failed to share ${itemName}: ${error}`);
           setShowPopup(true);

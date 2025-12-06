@@ -36,10 +36,14 @@ export const useCreate = () => {
 
             const json = await response.json();
             console.log("Response:", json);
+            
+            if (response.ok) { 
+                return true;
+            }
 
             if (!response.ok) {
                 setError(json.error || 'Failed to create list');
-                return;
+                return false;
             }
             
         } catch (err) {
