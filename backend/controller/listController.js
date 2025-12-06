@@ -193,7 +193,7 @@ exports.acceptRequest = catchAsync(async (req, res) => {
       });
 
       await Request.findByIdAndDelete(requestId);
-      await List.findByIdAndDelete(req.list._id);
+      await List.findByIdAndDelete(request.list._id);
 
       res.status(200).json({ message: "Request accepted successfully", receiptId: receipt._id });
   } catch (err) {
