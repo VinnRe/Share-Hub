@@ -20,10 +20,9 @@ export default function NavBar() {
   const { handleLogout, user } = useAuth();
   const navigate = useNavigate();
 
-  // Filter navigation based on user role
-  const navigation = user?.role === 'user' 
-    ? baseNavigation.filter(item => item.name !== 'Moderate') 
-    : baseNavigation;
+  const navigation = user?.role === 'admin'
+  ? baseNavigation
+  : baseNavigation.filter(item => item.name !== 'Moderate');
 
   const handleLogoutClick = async () => {
     await handleLogout();
