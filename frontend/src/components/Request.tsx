@@ -53,14 +53,7 @@ const Request: React.FC<ItemProps> = ({
                     setShowPopup(false)
                 }, 5000)
                 console.log("Successfully approved item: ", response)
-            } else {
-                setShowPopup(true)
-                setEventMessage(`Failed to approve ${title}`)
-                setTimeout(() => {
-                    setShowPopup(false)
-                }, 5000)
-                console.error("Failed to approve item: ", response)
-            }
+            } 
         } catch (error) {
             setShowPopup(true)
             setEventMessage(`Failed to approve ${title}`)
