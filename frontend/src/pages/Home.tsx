@@ -192,7 +192,7 @@ const Home = () => {
             </button>
             <button
               className="group border-4 rounded-xl w-[12vw] h-[20vh] border-crimson shadow-[0_0.3rem_1rem_rgba(0,0,0,0.4)] text-dark-red hover:bg-cherry-red hover:text-white cursor-pointer flex flex-col items-center justify-center"
-              onClick={() => handleCategoryFilter(["Tool"])}
+              onClick={() => handleCategoryFilter(["School Supplies"])}
             >
               <FaBookOpen fontSize="5rem" className="mt-1 text-dark-red group-hover:text-white category-icon" />
               <p className="text-maroon group-hover:text-white text-base font-extrabold">School Supplies</p>
